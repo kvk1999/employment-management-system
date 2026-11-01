@@ -56,9 +56,21 @@ export default function App() {
         },
       });
 
-      setEmployees(response.data.employees);
-      setTotalEmployees(response.data.pagination.totalEmployees);
-      setTotalPages(response.data.pagination.totalPages);
+      const data = response.data;
+
+      const employeeList = Array.isArray(data)
+        ? data
+        : Array.isArray(data.employees)
+        ? data.employees
+        : [];
+
+      const pagination = data.pagination || data;
+
+      setEmployees(employeeList);
+      setTotalEmployees(
+        pagination.totalEmployees ?? employeeList.length
+      );
+      setTotalPages(pagination.totalPages ?? 1);
     } catch (error) {
       setNotice(
         error.response?.data?.message ||
@@ -89,9 +101,21 @@ export default function App() {
 
         if (!active) return;
 
-        setEmployees(response.data.employees);
-        setTotalEmployees(response.data.pagination.totalEmployees);
-        setTotalPages(response.data.pagination.totalPages);
+        const data = response.data;
+
+        const employeeList = Array.isArray(data)
+          ? data
+          : Array.isArray(data.employees)
+          ? data.employees
+          : [];
+
+        const pagination = data.pagination || data;
+
+        setEmployees(employeeList);
+        setTotalEmployees(
+          pagination.totalEmployees ?? employeeList.length
+        );
+        setTotalPages(pagination.totalPages ?? 1);
       } catch (error) {
         if (!active) return;
 
