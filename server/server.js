@@ -7,14 +7,24 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 
 const app = express();
-const clientUrl = (process.env.CLIENT_URL || "http://localhost:5173").replace(
-  /\/+$/,
-  ""
-);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://employment-management-systemfrontend.onrender.com",
+];
 
-app.use(cors({
-  origin: clientUrl,
-}));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 

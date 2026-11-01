@@ -1,31 +1,18 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import DepartmentSelect from "./DepartmentSelect";
+import departments from "../constants/departments";
 
 const initialForm = {
     name: "",
     email: "",
     phone: "",
-    department: "",
+    department: departments[0],
     designation: "",
     joiningDate: "",
     salary: "",
     status: "Active",
 };
-
-const departments = [
-    "IT",
-    "HR",
-    "Finance",
-    "Marketing",
-    "Sales",
-    "Operations",
-    "Customer Support",
-    "Research and Development",
-    "Administration",
-    "Procurement",
-    "Logistics",
-    "Quality Assurance",
-];
 
 const getFormState = (employee) => {
     if (!employee) return initialForm;
@@ -156,18 +143,14 @@ export default function EmployeeForm({
               <label className="mb-1 block text-sm font-medium">
                 Department *
               </label>
-              <select
-                className={fieldClass}
-                name="department"
+              <DepartmentSelect
                 value={form.department}
-                onChange={handleChange}
-              >
-                {departments.map((department) => (
-                  <option key={department} value={department}>
-                    {department}
-                  </option>
-                ))}
-              </select>
+                onChange={(value) =>
+                  setForm((current) => ({ ...current, department: value }))
+                }
+                ariaLabel="Department"
+                required
+              />
             </div>
 
             <div>

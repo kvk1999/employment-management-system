@@ -13,16 +13,9 @@ import API from "./api";
 import EmployeeForm from "./components/EmployeeForm";
 import EmployeeTable from "./components/EmployeeTable";
 import ConfirmDialog from "./components/ConfirmDialog";
+import DepartmentSelect from "./components/DepartmentSelect";
 import Pagination from "./components/Pagination";
-
-const departments = [
-  "IT",
-  "HR",
-  "Finance",
-  "Marketing",
-  "Sales",
-  "Operations",
-];
+import departments from "./constants/departments";
 
 export default function App() {
   const [employees, setEmployees] = useState([]);
@@ -32,7 +25,7 @@ export default function App() {
 
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
-  const [sortBy, setSortBy] = useState("joiningDate");
+  const [sortBy, setSortBy] = useState("salary");
   const [order, setOrder] = useState("desc");
 
   const [loading, setLoading] = useState(false);
@@ -384,20 +377,12 @@ export default function App() {
                     />
                   </div>
 
-                  <select
+                  <DepartmentSelect
                     value={department}
-                    onChange={(e) =>
-                      changeDepartment(e.target.value)
-                    }
-                    className="rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-500"
-                  >
-                    <option value="">All Departments</option>
-                    {departments.map((item) => (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={changeDepartment}
+                    includeAll
+                    ariaLabel="Filter by department"
+                  />
 
                   <select
                     value={sortBy}
@@ -408,6 +393,7 @@ export default function App() {
                     <option value="joiningDate">
                       Sort by Joining Date
                     </option>
+                    <option value="salary">Sort by Salary</option>
                   </select>
 
                   <select

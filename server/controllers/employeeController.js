@@ -57,7 +57,7 @@ exports.getEmployees = async (req, res) => {
         const { 
             search = "",
             department = "",
-            sortBy = "joiningDate",
+            sortBy = "salary",
             order = "desc",
             page = 1,
             limit = 10,
@@ -81,10 +81,16 @@ exports.getEmployees = async (req, res) => {
             ];
         }
 
-        const allowedSortFields = ["joiningDate", "name", "email", "department"];
+        const allowedSortFields = [
+            "joiningDate",
+            "name",
+            "email",
+            "department",
+            "salary",
+        ];
         const requestedSortField = allowedSortFields.includes(sortBy)
             ? sortBy
-            : "joiningDate";
+            : "salary";
         const sortField = requestedSortField === "joiningDate"
             ? "dateofJoining"
             : requestedSortField;
