@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const {
-    createEmployee,
-    getEmployees,
-    getEmployeeById,
-    updateEmployee,
-    deleteEmployee,
+  createEmployee,
+  getEmployees,
+  getEmployeeById,
+  updateEmployee,
+  deleteEmployee,
 } = require("../controllers/employeeController");
 
 router.post("/", createEmployee);
